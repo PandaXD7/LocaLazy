@@ -1,0 +1,46 @@
+import { useState } from "react";
+
+export default function App() {
+  const [location, setLocation] = useState(null);
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
+      {!location ? <LocationSetup onConfirm={setLocation} /> : <StoreLocator location={location} />}
+    </div>
+  );
+}
+
+function LocationSetup({ onConfirm }) {
+  return (
+    <div className="bg-white shadow-lg rounded-xl p-6 max-w-lg w-full text-center">
+      <h2 className="text-xl font-semibold mb-4">Set Your Location</h2>
+      <input type="text" placeholder="Enter address" className="w-full p-2 border rounded mb-2" />
+      <input type="text" placeholder="City" className="w-full p-2 border rounded mb-2" />
+      <input type="text" placeholder="ZIP code" className="w-full p-2 border rounded mb-4" />
+      <button onClick={() => onConfirm("User Location Set")} className="bg-black text-white px-4 py-2 rounded">Confirm Location</button>
+    </div>
+  );
+}
+
+function StoreLocator({ location }) {
+  const stores = [
+    { name: "Grocery Store A", distance: "0.5 miles", address: "123 Store Street", hours: "9:00 AM - 9:00 PM" },
+    { name: "Grocery Store B", distance: "0.8 miles", address: "456 Market Avenue", hours: "8:00 AM - 10:00 PM" },
+    { name: "Grocery Store C", distance: "1.2 miles", address: "789 Shopping Lane", hours: "7:00 AM - 11:00 PM" }
+  ];
+
+  return (
+    <div className="max-w-3xl w-full">
+      <h2 className="text-2xl font-semibold mb-4 text-center">Stores Near You</h2>
+      {stores.map((store, index) => (
+        <div key={index} className="bg-white shadow-md rounded-lg p-4 mb-4">
+          <h3 className="text-lg font-semibold">{store.name}</h3>
+          <p>{store.distance} away</p>
+          <p>{store.address}</p>
+          <p>{store.hours}</p>
+          <button className="bg-black text-white px-4 py-2 mt-2 rounded">Place Order</button>
+        </div>
+      ))}
+    </div>
+  );
+}
